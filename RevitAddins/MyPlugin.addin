@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+ <AddIn Type="Application">
+       <Name>Lab1PlaceGroup</Name>
+       <FullClassName>ClassLibrary1.Main</FullClassName>
+       <Text>Lab1PlaceGroup</Text>
+       <Description>Gets the Element ID</Description>
+       <VisibilityMode>AlwaysVisible</VisibilityMode>
+       <Assembly>C:\Users\User\source\repos\ClassLibrary1\ClassLibrary1\bin\Debug\ClassLibrary1.dll</Assembly>
+       <AddInId>4889BD5F-2EA7-413B-A44E-ADBE8E567C92</AddInId>
+    <VendorId>PD</VendorId>
+    <VendorDescription>ENG</VendorDescription>
+ </AddIn>
+  <AddIn Type="Command">
+       <Name>Test</Name>
+       <FullClassName>ClassLibrary1.Tests.RevitExecute</FullClassName>
+       <Text>Test Text</Text>
+       <Description>Gets the Element ID</Description>
+       <VisibilityMode>AlwaysVisible</VisibilityMode>
+       <Assembly>C:\Users\User\source\repos\ClassLibrary1\ClassLibrary1\bin\Debug\ClassLibrary1.dll</Assembly>
+       <AddInId>97E1970B-5252-4F35-B3F9-4193859A894C</AddInId>
+    <VendorId>PD</VendorId>
+    <VendorDescription>ENG</VendorDescription>
+ </AddIn>
+</RevitAddIns>
