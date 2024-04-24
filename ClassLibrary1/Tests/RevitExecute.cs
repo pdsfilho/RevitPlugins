@@ -19,7 +19,15 @@ namespace ClassLibrary1.Tests
             var uidoc = uiapp.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            TaskDialog.Show("Revit", "Hello ENG!");
+            //Select elements
+            var element = uidoc.Selection.GetElementIds().Select(
+                x => doc.GetElement(x)).First();
+            
+            //Get parameter element
+            var value = element.LookupParameter("Mark").AsString();
+
+
+            TaskDialog.Show("Message", value);
             
             return Result.Succeeded;
 

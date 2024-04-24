@@ -21,9 +21,10 @@ namespace ClassLibrary1
             //Ribbon creation
             RibbonPanel ribbonPanel = application.CreateRibbonPanel(tabName, "Parameter Ribbon Panel");
 
+            //Button creation
             string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
             PushButtonData buttonData = new PushButtonData("cmdMyTest", "Parameter Scanner",
-                thisAssemblyPath, "ClassLibrary1.Tests.TestRevit");
+                thisAssemblyPath, "ClassLibrary1.Tests.RevitExecute");
 
             PushButton pushButton = ribbonPanel.AddItem(buttonData) as PushButton;
 
