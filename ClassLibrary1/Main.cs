@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace ClassLibrary1
 {
@@ -14,6 +16,7 @@ namespace ClassLibrary1
     {
         public Result OnStartup(UIControlledApplication application)
         {
+            
             //Tab creation
             string tabName = "Parameters";
             application.CreateRibbonTab(tabName);
@@ -22,14 +25,18 @@ namespace ClassLibrary1
             RibbonPanel ribbonPanel = application.CreateRibbonPanel(tabName, "Parameter Ribbon Panel");
 
             //Button creation
-            string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
-            PushButtonData buttonData = new PushButtonData("cmdMyTest", "Parameter Scanner",
+            String thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
+            String path = System.IO.Path.GetDirectoryName(thisAssemblyPath);
+
+            PushButtonData buttonData = new PushButtonData("ParametersBtn", "Parameter Scanner",
                 thisAssemblyPath, "ClassLibrary1.Tests.RevitExecute");
+
 
             PushButton pushButton = ribbonPanel.AddItem(buttonData) as PushButton;
 
             pushButton.ToolTip = "Hi, This is a Plugin for ENG!";
 
+            buttonData.LargeImage = new BitmapImage(new Uri(path + @"\Images\Eng.png"));
             return Result.Succeeded;
         }
 
