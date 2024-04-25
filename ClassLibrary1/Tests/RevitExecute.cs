@@ -3,6 +3,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using Autodesk.Revit.UI.Selection;
+using ClassLibrary1.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,21 +26,16 @@ namespace ClassLibrary1.Tests
 
             try
             {
-                //Select elements
-                var element = uidoc.Selection.GetElementIds().Select(
-                    x => doc.GetElement(x)).First();
+                //Window pop up
+                var v = doc.ActiveView;
+                var vName = v.Name;
+                var vId = v.Id;
+                var vTemplateId = v.ViewTemplateId.ToString();
 
-                //Get parameter value ("Mark")
-                // var value = element.get_Parameter(BuiltInParameter.ALL_MODEL_MARK).AsString();
+                ParameterWindow parameterWindow = new ParameterWindow(uidoc);
+                parameterWindow.label_pmtName.Content = vName;
 
-                //Pick elements with built in parameters "MARK"
-               // uidoc.Selection.PickObjects(ObjectType.Element);
-
-                List<FamilyInstance> list = new FilteredElementCollector(doc).OfClass(typeof(FamilyInstance)).Where(
-                    a => a.LookupParameter("Mark").AsString() == "ENG").Cast<FamilyInstance>().ToList();
-
-                //TaskDialog.Show("Message", value);
-                TaskDialog.Show("Message", list.ToString());
+                parameterWindow.ShowDialog();
 
 
                 return Result.Succeeded;
