@@ -1,5 +1,5 @@
 **Description**<br />
-Welcome to this Revit project! Here it is a implementation about a specific element filtering obtaining a parameter's name and value.<br /><br />
+Welcome to this Revit project! Here it is a implementation about a specific element filter which obtains a parameter's name and value.<br /><br />
 
 **Instructions**<br />
 * Download the Auxiliary_Files.zip<br />
