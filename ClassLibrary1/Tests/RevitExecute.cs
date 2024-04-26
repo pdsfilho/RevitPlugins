@@ -27,13 +27,13 @@ namespace ClassLibrary1.Tests
             try
             {
                 //Window pop up
-                var v = doc.ActiveView;
-                var vName = v.Name;
-                var vId = v.Id;
-                var vTemplateId = v.ViewTemplateId.ToString();
+               //// var v = doc.ActiveView;
+               // var vName = v.Name;
+                //var vId = v.Id;
+                //var vTemplateId = v.ViewTemplateId.ToString();
 
                 ParameterWindow parameterWindow = new ParameterWindow(uidoc);
-                parameterWindow.label_pmtName.Content = vName;
+               // parameterWindow.label_pmtName.Content = $"Name:" vName;
 
                 parameterWindow.ShowDialog();
 

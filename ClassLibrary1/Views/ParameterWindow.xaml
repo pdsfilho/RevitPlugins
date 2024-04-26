@@ -8,21 +8,22 @@
              Height="auto" Width="500" ResizeMode="NoResize" SizeToContent="Height" Title="Parameter Scanner">
     <Border Padding="15">
         <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal">
+            <DockPanel>
                 <Label Name="label_pmtName" Content="*Parameter Name: "></Label>
-                <TextBox x:Name="textBox_pmtName" Margin="5" Width="300"></TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="textBox_pmtName" Margin="5" Width="300" HorizontalAlignment="Right" DataContextChanged="pmtNameDataContextChanges"></TextBox>
+            </DockPanel>
+            <DockPanel>
                 <Label Name="label_pmtValue" Content="Parameter Value: "></Label>
-                <TextBox x:Name="textBox_pmtValue" Margin="5" Width="300"></TextBox>
-                <Separator></Separator>
-            </StackPanel>
+                <TextBox x:Name="textBox_pmtValue" Margin="5" Width="300" HorizontalAlignment="Right"></TextBox>
+                
+            </DockPanel>
             <Separator></Separator>
             <StackPanel Orientation="Horizontal" Margin="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         

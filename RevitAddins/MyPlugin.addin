@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RevitAddIns>
  <AddIn Type="Application">
-       <Name>Lab1PlaceGroup</Name>
+       <Name>ParameterScanner</Name>
        <FullClassName>ClassLibrary1.Main</FullClassName>
-       <Text>Lab1PlaceGroup</Text>
+       <Text>ENG Implementation</Text>
        <Description>Gets the Element ID</Description>
        <VisibilityMode>AlwaysVisible</VisibilityMode>
        <Assembly>C:\Users\User\source\repos\ClassLibrary1\ClassLibrary1\bin\Debug\ClassLibrary1.dll</Assembly>
-       <AddInId>4889BD5F-2EA7-413B-A44E-ADBE8E567C92</AddInId>
+       <AddInId>3F4E9405-5635-440F-B0FF-A97A9A2A4C5F</AddInId>
     <VendorId>PD</VendorId>
     <VendorDescription>ENG</VendorDescription>
  </AddIn>

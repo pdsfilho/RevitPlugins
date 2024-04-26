@@ -36,7 +36,8 @@ namespace ClassLibrary1
 
             pushButton.ToolTip = "Hi, This is a Plugin for ENG!";
 
-            buttonData.LargeImage = new BitmapImage(new Uri(path + @"\Images\Eng-64.png"));
+            // Image not loading
+            // buttonData.LargeImage = new BitmapImage(new Uri(path + @"\Images\Eng-64.png"));
             return Result.Succeeded;
         }
 
