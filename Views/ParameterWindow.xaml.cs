@@ -1,5 +1,6 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -38,6 +39,15 @@ namespace ClassLibrary1.Views
             label_pmtValue.Content = "Parameter Value: ";
         }
 
+        private void IsolateClick(object sender, RoutedEventArgs e)
+        {
+            string parameterName = textBox_pmtName.Text;
+            string parameterValue = textBox_pmtValue.Text;
+
+            SelectCeilingAndFloor(parameterName, parameterValue, 1);
+
+        }
+
         private void SelectClick(object sender, RoutedEventArgs e)
         {
             //Getting the texts
@@ -45,9 +55,21 @@ namespace ClassLibrary1.Views
             string parameterName = textBox_pmtName.Text;
             string parameterValue = textBox_pmtValue.Text;
 
+            SelectCeilingAndFloor(parameterName, parameterValue, 2);
+
+        }
+
+        private void pmtNameDataContextChanges(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            
+        }
+
+        private void SelectCeilingAndFloor(string pn, string pv, int buttonPressed)
+        {
+
             //Select elements
             var element = uidoc.Selection.GetElementIds().Select(
-                x => doc.GetElement(x)).First();
+                x => doc.GetElement(x)).FirstOrDefault();
 
             //Pick elements with built in parameters "MARK"
             // uidoc.Selection.PickObjects(ObjectType.Element);
@@ -62,22 +84,25 @@ namespace ClassLibrary1.Views
 
             var multiCategoryFilter = new ElementMulticategoryFilter(ceilingAndFloor);
 
-            var collector = new FilteredElementCollector(doc).WherePasses(multiCategoryFilter);
+            var collector = new FilteredElementCollector(doc).WherePasses(multiCategoryFilter).WhereElementIsNotElementType();
 
-            List<CeilingAndFloor> list = new FilteredElementCollector(doc).OfClass(typeof(CeilingAndFloor)).Where(
-               a => a.LookupParameter(parameterName).AsString() == parameterValue).Cast<CeilingAndFloor>().ToList();
 
-            //TaskDialog.Show("Message", value);
-            //TaskDialog.Show("Message", list.Count().ToString());
+            if (buttonPressed == 1)
+            {
+                List<CeilingAndFloor> list = new FilteredElementCollector(doc).OfClass(typeof(CeilingAndFloor)).Where(
+             a => a.LookupParameter(pn).AsString() == pv).Cast<CeilingAndFloor>().ToList();
 
-            var resultForm = new ResultForm(collector, list);
-            resultForm.ShowDialog();
+                var isolatedElements = uidoc.Selection.PickElementsByRectangle((Autodesk.Revit.UI.Selection.ISelectionFilter)list, "test");
+            }
+            else if (buttonPressed == 2)
+            {
+                List<CeilingAndFloor> list = new FilteredElementCollector(doc).OfClass(typeof(CeilingAndFloor)).Where(
+              a => a.LookupParameter(pn).AsString() == pv).Cast<CeilingAndFloor>().ToList();
+               
+                var resultForm = new ResultForm(collector, list);
+                resultForm.ShowDialog();
+            }       
 
-        }
-
-        private void pmtNameDataContextChanges(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            
         }
     }
 }

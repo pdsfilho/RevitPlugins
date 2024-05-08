@@ -28,7 +28,8 @@
                         <ColumnDefinition Width="*"/>
                         
                     </Grid.ColumnDefinitions>
-                    <Button Name="button_isolate" Content="Isolate in View" Width="100" Grid.Column="0"/>
+                    
+                    <Button Name="button_isolate" Content="Isolate in View" Width="100" Grid.Column="0" Click="IsolateClick"/>
                     <Button Name="button_select" Content="Select" Width="100" Grid.Column="2" Click="SelectClick"/>
                 </Grid>
             </StackPanel>
