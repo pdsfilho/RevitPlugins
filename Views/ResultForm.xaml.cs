@@ -22,10 +22,10 @@ namespace ClassLibrary1.Views
     /// </summary>
     public partial class ResultForm : Window
     {
-        public ResultForm(IEnumerable collection, List<CeilingAndFloor> list)
+        public ResultForm(List<CeilingAndFloor> list)
         {
             InitializeComponent();
-            listBox.ItemsSource = collection;
+            listBox.ItemsSource = list;
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using ClassLibrary1.Extensions.SelectionExtensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +24,8 @@ namespace ClassLibrary1.Views
     /// <summary>
     /// Interaction logic for ParameterWindow.xaml
     /// </summary>
+
+    [Transaction(TransactionMode.Manual)]
     public partial class ParameterWindow : Window
     {
         public UIDocument uidoc { get; }
@@ -31,12 +35,9 @@ namespace ClassLibrary1.Views
         {
             uidoc = UiDoc;
             doc = UiDoc.Document;
-
-            InitializeComponent();
            
-            //Forcing label contents
-            label_pmtName.Content = "*Parameter Name: ";
-            label_pmtValue.Content = "Parameter Value: ";
+            
+            InitializeComponent();
         }
 
         private void IsolateClick(object sender, RoutedEventArgs e)
@@ -64,42 +65,48 @@ namespace ClassLibrary1.Views
             
         }
 
-        private void SelectCeilingAndFloor(string pn, string pv, int buttonPressed)
+        private async void SelectCeilingAndFloor(string pn, string pv, int buttonPressed)
         {
+           
+            //Isolate In View --Button
+            if (buttonPressed == 1)
+            {
+                 var activeDocument = doc.ActiveView;
 
-            //Select elements
-            var element = uidoc.Selection.GetElementIds().Select(
-                x => doc.GetElement(x)).FirstOrDefault();
-
-            //Pick elements with built in parameters "MARK"
-            // uidoc.Selection.PickObjects(ObjectType.Element);
-
-            //Create a filter for Ceiling and Floor
-            var ceilingAndFloor = new List<BuiltInCategory>()
+                //Create a filter for Ceiling and Floor
+                List<BuiltInCategory> ceilingAndFloor = new List<BuiltInCategory>()
             {
                 BuiltInCategory.OST_Floors,
                 BuiltInCategory.OST_Ceilings,
-
             };
 
-            var multiCategoryFilter = new ElementMulticategoryFilter(ceilingAndFloor);
 
-            var collector = new FilteredElementCollector(doc).WherePasses(multiCategoryFilter).WhereElementIsNotElementType();
+                ElementMulticategoryFilter multiCategoryFilter = new ElementMulticategoryFilter(ceilingAndFloor);
 
+                //Collector for Ceiling and Floor
+                FilteredElementCollector collector = new FilteredElementCollector(doc).
+                    WherePasses(multiCategoryFilter).WhereElementIsNotElementType();
 
-            if (buttonPressed == 1)
-            {
-                List<CeilingAndFloor> list = new FilteredElementCollector(doc).OfClass(typeof(CeilingAndFloor)).Where(
-             a => a.LookupParameter(pn).AsString() == pv).Cast<CeilingAndFloor>().ToList();
+                using (Transaction t = new Transaction(doc, "Isolate In View"))
+                {
+                    t.Start();
 
-                var isolatedElements = uidoc.Selection.PickElementsByRectangle((Autodesk.Revit.UI.Selection.ISelectionFilter)list, "test");
+                    //Get ElementIDs
+                    ICollection<ElementId> elementids = collector.ToElementIds();
+                    activeDocument.IsolateElementsTemporary(elementids);
+                                                        
+                    t.Commit();
+                }
             }
+            
+            //Select --Button
             else if (buttonPressed == 2)
             {
+                //Filtering the Parameters for a List
                 List<CeilingAndFloor> list = new FilteredElementCollector(doc).OfClass(typeof(CeilingAndFloor)).Where(
-              a => a.LookupParameter(pn).AsString() == pv).Cast<CeilingAndFloor>().ToList();
-               
-                var resultForm = new ResultForm(collector, list);
+                    a => a.LookupParameter(pn).AsString() == pv).Cast<CeilingAndFloor>().ToList();
+
+                var resultForm = new ResultForm(list);
                 resultForm.ShowDialog();
             }       
 
